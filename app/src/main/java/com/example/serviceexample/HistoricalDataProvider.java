@@ -61,6 +61,7 @@ public class HistoricalDataProvider extends ContentProvider {
         }
 
         @Override
+
         public void onCreate(SQLiteDatabase db) {
             db.execSQL(CREATE_DB_TABLE);
         }

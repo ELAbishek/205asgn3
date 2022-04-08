@@ -35,11 +35,12 @@ public class MyService extends Service{
     private static final int READ_TIMEOUT = 15000;
     private static final int CONNECTION_TIMEOUT = 15000;
 
-    private String ticker ;
+    private String ticker0 ;
     private String ticker1;
-    private String ticker1;
-    private String ticker1;
-    private String ticker1;
+    private String ticker2;
+    private String ticker3;
+    private String ticker4;
+    private String[] TArr = new String[5];
     private String token ="c94mbs2ad3if4j517ve0"; // put your own token
 
     private final class ServiceHandler extends Handler{
@@ -52,7 +53,7 @@ public class MyService extends Service{
 
             // url to get historical data
 
-            String stringUrl = "https://finnhub.io/api/v1/stock/candle?symbol="+ticker
+            String stringUrl = "https://finnhub.io/api/v1/stock/candle?symbol="+ticker0
                     +"&resolution=1&from=1631022248&to=1631627048&token="+token;
             String result;
             String inputLine;
@@ -140,7 +141,17 @@ public class MyService extends Service{
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId){
-        ticker = intent.getStringExtra("ticker0");
+        // Receive the tickers from MainActivity
+        ticker0 = intent.getStringExtra("ticker0");
+        ticker1 = intent.getStringExtra("ticker1");
+        ticker2 = intent.getStringExtra("ticker2");
+        ticker3 = intent.getStringExtra("ticker3");
+        ticker4 = intent.getStringExtra("ticker4");
+        TArr[0] = ticker0;
+        TArr[1] = ticker1;
+        TArr[2] = ticker2;
+        TArr[3] = ticker3;
+        TArr[4] = ticker4;
         Toast.makeText(this, "download starting", Toast.LENGTH_SHORT).show();
 
         Message msg = serviceHandler.obtainMessage();

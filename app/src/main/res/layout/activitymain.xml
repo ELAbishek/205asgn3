@@ -69,7 +69,6 @@
         android:ems="10"
         android:hint="ticker4"
         android:inputType="textPersonName"
-        android:onClick="submit4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -83,7 +82,6 @@
         android:ems="10"
         android:hint="ticker3"
         android:inputType="textPersonName"
-        android:onClick="submit3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -97,7 +95,6 @@
         android:ems="10"
         android:hint="ticker2"
         android:inputType="textPersonName"
-        android:onClick="submit2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -111,7 +108,6 @@
         android:ems="10"
         android:hint="ticker1"
         android:inputType="textPersonName"
-        android:onClick="submit1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -125,7 +121,6 @@
         android:ems="10"
         android:hint="ticker0"
         android:inputType="textPersonName"
-        android:onClick="submit0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

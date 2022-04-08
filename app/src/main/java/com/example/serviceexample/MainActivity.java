@@ -37,15 +37,24 @@ public class MainActivity extends AppCompatActivity{
         calc = (Button) findViewById(R.id.calc_button);
         result = (TextView) findViewById(R.id.textview_result);
         ticker0 = (EditText) findViewById(R.id.ticker_input0);
+        ticker1 = (EditText) findViewById(R.id.ticker_input1);
+        ticker2 = (EditText) findViewById(R.id.ticker_input2);
+        ticker3 = (EditText) findViewById(R.id.ticker_input3);
+        ticker4 = (EditText) findViewById(R.id.ticker_input4);
 
         // start service, pass ticker info via an intent
 
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // This is what happens when you press download
                 Intent intent = new Intent(getApplicationContext(), MyService.class);
+                //Lines to send the tickers to MyService
                 intent.putExtra("ticker0", String.valueOf(ticker0.getText()));
-//                intent.putExtra()
+                intent.putExtra("ticker1", String.valueOf(ticker1.getText()));
+                intent.putExtra("ticker2", String.valueOf(ticker2.getText()));
+                intent.putExtra("ticker3", String.valueOf(ticker3.getText()));
+                intent.putExtra("ticker4", String.valueOf(ticker4.getText()));
                 startService(intent);
             }
         });
@@ -71,27 +80,6 @@ public class MainActivity extends AppCompatActivity{
     protected void onStop() {
         super.onStop();
         unregisterReceiver(myBroadcastReceiver);
-    }
-
-    public void submit0(View view){
-        String myInputText = ticker0.getText().toString();
-//        Toast.makeText(getApplicationContext(), "ticker is : " + ticker, Toast.LENGTH_SHORT ).show();
-    }
-    public void submit1(View view){
-        String myInputText = ticker1.getText().toString();
-//        Toast.makeText(getApplicationContext(), "ticker is : " + ticker, Toast.LENGTH_SHORT ).show();
-    }
-    public void submit2(View view){
-        String myInputText = ticker2.getText().toString();
-//        Toast.makeText(getApplicationContext(), "ticker is : " + ticker, Toast.LENGTH_SHORT ).show();
-    }
-    public void submit3(View view){
-        String myInputText = ticker3.getText().toString();
-//        Toast.makeText(getApplicationContext(), "ticker is : " + ticker, Toast.LENGTH_SHORT ).show();
-    }
-    public void submit4(View view){
-        String myInputText = ticker4.getText().toString();
-//        Toast.makeText(getApplicationContext(), "ticker is : " + ticker, Toast.LENGTH_SHORT ).show();
     }
 
 }
