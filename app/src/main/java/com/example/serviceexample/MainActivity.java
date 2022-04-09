@@ -10,24 +10,34 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity{
 
     private Button start, calc;
-    private TextView result;
+    private TextView result0;
+    private TextView result1;
+    private TextView result2;
+    private TextView result3;
+    private TextView result4;
     private EditText ticker0;
     private EditText ticker1;
     private EditText ticker2;
     private EditText ticker3;
     private EditText ticker4;
+    private TextView sdresult0;
+    private TextView sdresult1;
+    private TextView sdresult2;
+    private TextView sdresult3;
+    private TextView sdresult4;
 //    Uri CONTENT_URI = Uri.parse("content://com.example.serviceexample.HistoricalDataProvider/history");
     private BroadcastReceiver myBroadcastReceiver;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        myBroadcastReceiver = new MyBroadcastReceiver(new Handler(Looper.getMainLooper()));
+
 
         // set up layout
 
@@ -35,7 +45,22 @@ public class MainActivity extends AppCompatActivity{
 
         start = (Button) findViewById(R.id.start_button);
         calc = (Button) findViewById(R.id.calc_button);
-        result = (TextView) findViewById(R.id.textview_result);
+        result0 = (TextView) findViewById(R.id.textview_result0);
+        result1 = (TextView) findViewById(R.id.textview_result1);
+        result2 = (TextView) findViewById(R.id.textview_result2);
+        result3 = (TextView) findViewById(R.id.textview_result3);
+        result4 = (TextView) findViewById(R.id.textview_result4);
+        result1 = (TextView) findViewById(R.id.textview_result1);
+        sdresult0 = (TextView) findViewById(R.id.sd_0);
+        sdresult1 = (TextView) findViewById(R.id.sd_1);
+        sdresult2 = (TextView) findViewById(R.id.sd_2);
+        sdresult3 = (TextView) findViewById(R.id.sd_3);
+        sdresult4 = (TextView) findViewById(R.id.sd_4);
+        result1 = (TextView) findViewById(R.id.textview_result1);
+        result2 = (TextView) findViewById(R.id.textview_result2);
+        result3 = (TextView) findViewById(R.id.textview_result3);
+        result4 = (TextView) findViewById(R.id.textview_result4);
+        result1 = (TextView) findViewById(R.id.textview_result1);
         ticker0 = (EditText) findViewById(R.id.ticker_input0);
         ticker1 = (EditText) findViewById(R.id.ticker_input1);
         ticker2 = (EditText) findViewById(R.id.ticker_input2);
@@ -50,6 +75,8 @@ public class MainActivity extends AppCompatActivity{
                 // This is what happens when you press download
                 Intent intent = new Intent(getApplicationContext(), MyService.class);
                 //Lines to send the tickers to MyService
+                HistoricalDataProvider.del();
+                MyBroadcastReceiver.count = 0;
                 intent.putExtra("ticker0", String.valueOf(ticker0.getText()));
                 intent.putExtra("ticker1", String.valueOf(ticker1.getText()));
                 intent.putExtra("ticker2", String.valueOf(ticker2.getText()));
@@ -64,8 +91,17 @@ public class MainActivity extends AppCompatActivity{
         calc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                result.setText("Waiting for data.. ");
-                myBroadcastReceiver = new MyBroadcastReceiver(new Handler(Looper.getMainLooper()));
+                result0.setText("Waiting..");
+                result1.setText("Waiting..");
+                result2.setText("Waiting..");
+                result3.setText("Waiting..");
+                result4.setText("Waiting..");
+                sdresult0.setText("Waiting..");
+                sdresult1.setText("Waiting..");
+                sdresult2.setText("Waiting..");
+                sdresult3.setText("Waiting..");
+                sdresult4.setText("Waiting..");
+//                myBroadcastReceiver = new MyBroadcastReceiver(new Handler(Looper.getMainLooper()));
                 registerReceiver(myBroadcastReceiver, new IntentFilter("DOWNLOAD_COMPLETE"));
             }
         });

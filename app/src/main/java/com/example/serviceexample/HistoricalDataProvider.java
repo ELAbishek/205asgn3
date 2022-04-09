@@ -24,8 +24,10 @@ public class HistoricalDataProvider extends ContentProvider {
     static final Uri CONTENT_URI = Uri.parse(URL);
 
     static final String ID = "id";
+    static final String TICKER_NAME = "ticker_name";
+    static final String OPEN = "open";
     static final String CLOSE = "close";
-    static final String VOLUME = "volume";
+//    static final String VOLUME = "volume";
 
     private static HashMap<String, String> HISTORY_PROJECTION_MAP;
 
@@ -42,15 +44,17 @@ public class HistoricalDataProvider extends ContentProvider {
 
     // Database specific constant declarations
 
-    private SQLiteDatabase db;
+    private static SQLiteDatabase db;
     static final String DATABASE_NAME = "Historical_Data";
     static final String TABLE_NAME = "history";
     static final int DATABASE_VERSION = 1;
+
     static final String CREATE_DB_TABLE =
             " CREATE TABLE " + TABLE_NAME +
                     " (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    " close DECIMAL(5,3) NOT NULL, " +
-                    " volume DECIMAL(10,1) NOT NULL);";
+                    " ticker_name char(1) NOT NULL, " +
+                    " open DECIMAL(5,3) NOT NULL, " +
+                    " close DECIMAL(5,3) NOT NULL);";
 
 
     // helper class creates repo
@@ -63,6 +67,7 @@ public class HistoricalDataProvider extends ContentProvider {
         @Override
 
         public void onCreate(SQLiteDatabase db) {
+            db.execSQL("drop table if exists " + TABLE_NAME);
             db.execSQL(CREATE_DB_TABLE);
         }
 
@@ -84,6 +89,10 @@ public class HistoricalDataProvider extends ContentProvider {
 
     }
 
+    public static void del(){
+        db.execSQL("drop table if exists " + TABLE_NAME);
+        db.execSQL(CREATE_DB_TABLE);
+    }
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {

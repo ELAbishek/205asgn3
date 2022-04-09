@@ -49,85 +49,577 @@ public class MyService extends Service{
         }
 
         @Override
-        public void handleMessage(Message msg){
+        public void handleMessage(Message msg) {
 
             // url to get historical data
 
-            String stringUrl = "https://finnhub.io/api/v1/stock/candle?symbol="+ticker0
-                    +"&resolution=1&from=1631022248&to=1631627048&token="+token;
-            String result;
-            String inputLine;
-
+            String stringUrl0 = "https://finnhub.io/api/v1/stock/candle?symbol=" + ticker0
+                    + "&resolution=M&from=1625097601&to=1640995199&token=" + token;
+            String result0;
+            String inputLine0;
             try {
 
                 // make GET requests
 
-                URL myUrl = new URL(stringUrl);
-                HttpURLConnection connection =(HttpURLConnection) myUrl.openConnection();
+                URL myUrl0 = new URL(stringUrl0);
+                HttpURLConnection connection0 = (HttpURLConnection) myUrl0.openConnection();
 
-                connection.setRequestMethod(REQUEST_METHOD);
-                connection.setReadTimeout(READ_TIMEOUT);
-                connection.setConnectTimeout(CONNECTION_TIMEOUT);
+                connection0.setRequestMethod(REQUEST_METHOD);
+                connection0.setReadTimeout(READ_TIMEOUT);
+                connection0.setConnectTimeout(CONNECTION_TIMEOUT);
 
-                connection.connect();
+                connection0.connect();
 
                 // store json string from GET response
 
-                InputStreamReader streamReader = new InputStreamReader(connection.getInputStream());
+                InputStreamReader streamReader = new InputStreamReader(connection0.getInputStream());
                 BufferedReader reader = new BufferedReader(streamReader);
                 StringBuilder stringBuilder = new StringBuilder();
 
-                while((inputLine = reader.readLine()) != null){
-                    stringBuilder.append(inputLine);
+                while ((inputLine0 = reader.readLine()) != null) {
+                    stringBuilder.append(inputLine0);
                 }
 
                 reader.close();
                 streamReader.close();
 
-                result = stringBuilder.toString();
+                result0 = stringBuilder.toString();
 
-            } catch(IOException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
-                result = null;
+                result0 = null;
+
                 Thread.currentThread().interrupt();
             }
 
             // parse the json string into 'close' and 'volume' array
 
-            JSONObject jsonObject = null;
-            JSONArray jsonArrayClose = null;
-            JSONArray jsonArrayVolume = null;
+            JSONObject jsonObject0 = null;
+            JSONArray jsonArrayClose0 = null;
+            JSONArray jsonArrayOpen0 = null;
+
 
             try {
-                jsonObject = new JSONObject(result);
-                jsonArrayClose = jsonObject.getJSONArray("c");
-                jsonArrayVolume = jsonObject.getJSONArray("v");
-            } catch (JSONException e) {e.printStackTrace();}
+                jsonObject0 = new JSONObject(result0);
+                jsonArrayClose0 = jsonObject0.getJSONArray("c");
+                jsonArrayOpen0 = jsonObject0.getJSONArray("o");
+
+//                jsonArrayVolume = jsonObject.getJSONArray("v");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
 
-            Log.v("close", String.valueOf(jsonArrayClose.length()));
-            Log.v("vol", String.valueOf(jsonArrayVolume.length()));
-
+//            Log.v("close", String.valueOf(jsonArrayClose0.length()));
+//            Log.v("vol", String.valueOf(jsonArrayVolume.length()));
             try {
-                for (int i = 0; i < jsonArrayClose.length(); i++) {
-                    double close = jsonArrayClose.getDouble(i);
-                    double volume = jsonArrayVolume.getDouble(i);
-                    Log.v("data", i + ":, c: " + close + " v: " + volume);
+                try {
+                    for (int i = 0; i < jsonArrayClose0.length(); i++) {
+                        double close = jsonArrayClose0.getDouble(i);
+                        double open = jsonArrayOpen0.getDouble(i);
+
+//                    double volume = jsonArrayVolume.getDouble(i);
+                        Log.v("data", i + ":, c: " + close);
+
+                        ContentValues values = new ContentValues();
+                        values.put(HistoricalDataProvider.TICKER_NAME, "0");
+                        values.put(HistoricalDataProvider.CLOSE, close);
+                        values.put(HistoricalDataProvider.OPEN, open);
+
+//                    values.put(HistoricalDataProvider.VOLUME, volume);
+                        getContentResolver().insert(HistoricalDataProvider.CONTENT_URI, values);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                // broadcast message that download is complete
+
+                Intent intent0 = new Intent("DOWNLOAD_COMPLETE");
+                sendBroadcast(intent0);
+                Log.v("Down2status", "download 2 end");
+
+                stopSelf(msg.arg1);
+
+            }catch (NullPointerException e){
+                for (int i = 0; i < 6; i++) {
+                    double close = 0;
+                    double open = 0;
+//                    double volume = jsonArrayVolume.getDouble(i);
+                    Log.v("data", i + ":, c: " + close );
 
                     ContentValues values = new ContentValues();
+                    values.put(HistoricalDataProvider.TICKER_NAME, "0");
                     values.put(HistoricalDataProvider.CLOSE, close);
-                    values.put(HistoricalDataProvider.VOLUME, volume);
+                    values.put(HistoricalDataProvider.OPEN, open);
+
+//                    values.put(HistoricalDataProvider.VOLUME, volume);
                     getContentResolver().insert(HistoricalDataProvider.CONTENT_URI, values);
+
                 }
-            } catch (JSONException e) {e.printStackTrace();}
+                Intent intent0 = new Intent("DOWNLOAD_COMPLETE");
+                sendBroadcast(intent0);
+                Log.v("Down2status", "null download 2");
 
-            // broadcast message that download is complete
+                stopSelf(msg.arg1);
+            }
+//-------------------------------------------------------------------------------------------------------------------------------
 
-            Intent intent = new Intent("DOWNLOAD_COMPLETE");
-            sendBroadcast(intent);
+            // url to get historical data
 
-            stopSelf(msg.arg1);
+            String stringUrl1 = "https://finnhub.io/api/v1/stock/candle?symbol=" + ticker1
+                    + "&resolution=M&from=1625097601&to=1640995199&token=" + token;
+            String result1;
+            String inputLine1;
+            Log.v("Down2status", "download 2 start");
+            try {
 
+                // make GET requests
+
+                URL myUrl1 = new URL(stringUrl1);
+                HttpURLConnection connection1 = (HttpURLConnection) myUrl1.openConnection();
+
+                connection1.setRequestMethod(REQUEST_METHOD);
+                connection1.setReadTimeout(READ_TIMEOUT);
+                connection1.setConnectTimeout(CONNECTION_TIMEOUT);
+
+                connection1.connect();
+
+                // store json string from GET response
+
+                InputStreamReader streamReader = new InputStreamReader(connection1.getInputStream());
+                BufferedReader reader = new BufferedReader(streamReader);
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ((inputLine1 = reader.readLine()) != null) {
+                    stringBuilder.append(inputLine1);
+                }
+
+                reader.close();
+                streamReader.close();
+
+                result1 = stringBuilder.toString();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                result1 = null;
+
+                Thread.currentThread().interrupt();
+            }
+
+            // parse the json string into 'close' and 'volume' array
+
+            JSONObject jsonObject1 = null;
+            JSONArray jsonArrayClose1 = null;
+            JSONArray jsonArrayOpen1 = null;
+
+
+            try {
+                jsonObject1 = new JSONObject(result1);
+                jsonArrayClose1 = jsonObject1.getJSONArray("c");
+                jsonArrayOpen1 = jsonObject1.getJSONArray("o");
+
+//                jsonArrayVolume = jsonObject.getJSONArray("v");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+//            Log.v("close", String.valueOf(jsonArrayClose1.length()));
+//            Log.v("vol", String.valueOf(jsonArrayVolume.length()));
+            try {
+                try {
+                    for (int i = 0; i < jsonArrayClose1.length(); i++) {
+                        double close = jsonArrayClose1.getDouble(i);
+                        double open = jsonArrayOpen1.getDouble(i);
+
+//                    double volume = jsonArrayVolume.getDouble(i);
+                        Log.v("data", i + ":, c: " + close);
+
+                        ContentValues values = new ContentValues();
+                        values.put(HistoricalDataProvider.TICKER_NAME, "1");
+                        values.put(HistoricalDataProvider.CLOSE, close);
+                        values.put(HistoricalDataProvider.OPEN, open);
+
+//                    values.put(HistoricalDataProvider.VOLUME, volume);
+                        getContentResolver().insert(HistoricalDataProvider.CONTENT_URI, values);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                // broadcast message that download is complete
+
+                Intent intent0 = new Intent("DOWNLOAD_COMPLETE");
+                sendBroadcast(intent0);
+                Log.v("Down2status", "download 2 end");
+
+                stopSelf(msg.arg1);
+
+            }catch (NullPointerException e){
+                for (int i = 0; i < 6; i++) {
+                    double close = 0;
+                    double open = 0;
+//                    double volume = jsonArrayVolume.getDouble(i);
+                    Log.v("data", i + ":, c: " + close );
+
+                    ContentValues values = new ContentValues();
+                    values.put(HistoricalDataProvider.TICKER_NAME, "1");
+                    values.put(HistoricalDataProvider.CLOSE, close);
+                    values.put(HistoricalDataProvider.OPEN, open);
+
+//                    values.put(HistoricalDataProvider.VOLUME, volume);
+                    getContentResolver().insert(HistoricalDataProvider.CONTENT_URI, values);
+
+                }
+                Intent intent1 = new Intent("DOWNLOAD_COMPLETE");
+                sendBroadcast(intent1);
+                Log.v("Down2status", "null download 2");
+
+                stopSelf(msg.arg1);
+            }
+            //-------------------------------------------------------------------------------------------------------------------------------
+
+            // url to get historical data
+
+            String stringUrl2 = "https://finnhub.io/api/v1/stock/candle?symbol=" + ticker2
+                    + "&resolution=M&from=1625097601&to=1640995199&token=" + token;
+            String result2;
+            String inputLine2;
+            Log.v("Down2status", "download 2 start");
+            try {
+
+                // make GET requests
+
+                URL myUrl2 = new URL(stringUrl2);
+                HttpURLConnection connection2 = (HttpURLConnection) myUrl2.openConnection();
+
+                connection2.setRequestMethod(REQUEST_METHOD);
+                connection2.setReadTimeout(READ_TIMEOUT);
+                connection2.setConnectTimeout(CONNECTION_TIMEOUT);
+
+                connection2.connect();
+
+                // store json string from GET response
+
+                InputStreamReader streamReader = new InputStreamReader(connection2.getInputStream());
+                BufferedReader reader = new BufferedReader(streamReader);
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ((inputLine2 = reader.readLine()) != null) {
+                    stringBuilder.append(inputLine2);
+                }
+
+                reader.close();
+                streamReader.close();
+
+                result2 = stringBuilder.toString();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                result2 = null;
+
+                Thread.currentThread().interrupt();
+            }
+
+            // parse the json string into 'close' and 'volume' array
+
+            JSONObject jsonObject2 = null;
+            JSONArray jsonArrayClose2 = null;
+            JSONArray jsonArrayOpen2 = null;
+
+
+            try {
+                jsonObject2 = new JSONObject(result2);
+                jsonArrayClose2 = jsonObject2.getJSONArray("c");
+                jsonArrayOpen2 = jsonObject2.getJSONArray("o");
+
+//                jsonArrayVolume = jsonObject.getJSONArray("v");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+//            Log.v("close", String.valueOf(jsonArrayClose2.length()));
+//            Log.v("vol", String.valueOf(jsonArrayVolume.length()));
+            try {
+                try {
+                    for (int i = 0; i < jsonArrayClose2.length(); i++) {
+                        double close = jsonArrayClose2.getDouble(i);
+                        double open = jsonArrayOpen2.getDouble(i);
+
+//                    double volume = jsonArrayVolume.getDouble(i);
+                        Log.v("data", i + ":, c: " + close);
+
+                        ContentValues values = new ContentValues();
+                        values.put(HistoricalDataProvider.TICKER_NAME, "2");
+                        values.put(HistoricalDataProvider.CLOSE, close);
+                        values.put(HistoricalDataProvider.OPEN, open);
+
+//                    values.put(HistoricalDataProvider.VOLUME, volume);
+                        getContentResolver().insert(HistoricalDataProvider.CONTENT_URI, values);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                // broadcast message that download is complete
+
+                Intent intent0 = new Intent("DOWNLOAD_COMPLETE");
+                sendBroadcast(intent0);
+                Log.v("Down2status", "download 2 end");
+
+                stopSelf(msg.arg2);
+
+            }catch (NullPointerException e){
+                for (int i = 0; i < 6; i++) {
+                    double close = 0;
+                    double open = 0;
+//                    double volume = jsonArrayVolume.getDouble(i);
+                    Log.v("data", i + ":, c: " + close );
+
+                    ContentValues values = new ContentValues();
+                    values.put(HistoricalDataProvider.TICKER_NAME, "2");
+                    values.put(HistoricalDataProvider.CLOSE, close);
+                    values.put(HistoricalDataProvider.OPEN, open);
+
+//                    values.put(HistoricalDataProvider.VOLUME, volume);
+                    getContentResolver().insert(HistoricalDataProvider.CONTENT_URI, values);
+
+                }
+                Intent intent2 = new Intent("DOWNLOAD_COMPLETE");
+                sendBroadcast(intent2);
+                Log.v("Down2status", "null download 2");
+
+                stopSelf(msg.arg1);
+            }
+            //-------------------------------------------------------------------------------------------------------------------------------
+
+            // url to get historical data
+
+            String stringUrl3 = "https://finnhub.io/api/v1/stock/candle?symbol=" + ticker3
+                    + "&resolution=M&from=1625097601&to=1640995199&token=" + token;
+            String result3;
+            String inputLine3;
+            Log.v("Down2status", "download 2 start");
+            try {
+
+                // make GET requests
+
+                URL myUrl3 = new URL(stringUrl3);
+                HttpURLConnection connection3 = (HttpURLConnection) myUrl3.openConnection();
+
+                connection3.setRequestMethod(REQUEST_METHOD);
+                connection3.setReadTimeout(READ_TIMEOUT);
+                connection3.setConnectTimeout(CONNECTION_TIMEOUT);
+
+                connection3.connect();
+
+                // store json string from GET response
+
+                InputStreamReader streamReader = new InputStreamReader(connection3.getInputStream());
+                BufferedReader reader = new BufferedReader(streamReader);
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ((inputLine3 = reader.readLine()) != null) {
+                    stringBuilder.append(inputLine3);
+                }
+
+                reader.close();
+                streamReader.close();
+
+                result3 = stringBuilder.toString();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                result3 = null;
+
+                Thread.currentThread().interrupt();
+            }
+
+            // parse the json string into 'close' and 'volume' array
+
+            JSONObject jsonObject3 = null;
+            JSONArray jsonArrayClose3 = null;
+            JSONArray jsonArrayOpen3 = null;
+
+
+            try {
+                jsonObject3 = new JSONObject(result3);
+                jsonArrayClose3 = jsonObject3.getJSONArray("c");
+                jsonArrayOpen3 = jsonObject3.getJSONArray("o");
+
+//                jsonArrayVolume = jsonObject.getJSONArray("v");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+//            Log.v("close", String.valueOf(jsonArrayClose3.length()));
+//            Log.v("vol", String.valueOf(jsonArrayVolume.length()));
+            try {
+                try {
+                    for (int i = 0; i < jsonArrayClose3.length(); i++) {
+                        double close = jsonArrayClose3.getDouble(i);
+                        double open = jsonArrayOpen3.getDouble(i);
+
+//                    double volume = jsonArrayVolume.getDouble(i);
+                        Log.v("data", i + ":, c: " + close);
+
+                        ContentValues values = new ContentValues();
+                        values.put(HistoricalDataProvider.TICKER_NAME, "3");
+                        values.put(HistoricalDataProvider.CLOSE, close);
+                        values.put(HistoricalDataProvider.OPEN, open);
+//                    values.put(HistoricalDataProvider.VOLUME, volume);
+                        getContentResolver().insert(HistoricalDataProvider.CONTENT_URI, values);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                // broadcast message that download is complete
+
+                Intent intent0 = new Intent("DOWNLOAD_COMPLETE");
+                sendBroadcast(intent0);
+                Log.v("Down2status", "download 2 end");
+
+                stopSelf(msg.arg1);
+
+            }catch (NullPointerException e){
+                for (int i = 0; i < 6; i++) {
+                    double close = 0;
+                    double open = 0;
+
+//                    double volume = jsonArrayVolume.getDouble(i);
+                    Log.v("data", i + ":, c: " + close );
+
+                    ContentValues values = new ContentValues();
+                    values.put(HistoricalDataProvider.TICKER_NAME, "3");
+                    values.put(HistoricalDataProvider.CLOSE, close);
+                    values.put(HistoricalDataProvider.OPEN, open);
+//                    values.put(HistoricalDataProvider.VOLUME, volume);
+                    getContentResolver().insert(HistoricalDataProvider.CONTENT_URI, values);
+
+                }
+                Intent intent3 = new Intent("DOWNLOAD_COMPLETE");
+                sendBroadcast(intent3);
+                Log.v("Down2status", "null download 2");
+
+                stopSelf(msg.arg1);
+            }
+            //-------------------------------------------------------------------------------------------------------------------------------
+
+            // url to get historical data
+
+            String stringUrl4 = "https://finnhub.io/api/v1/stock/candle?symbol=" + ticker4
+                    + "&resolution=M&from=1625097601&to=1640995199&token=" + token;
+            String result4;
+            String inputLine4;
+            Log.v("Down2status", "download 2 start");
+            try {
+
+                // make GET requests
+
+                URL myUrl4 = new URL(stringUrl4);
+                HttpURLConnection connection4 = (HttpURLConnection) myUrl4.openConnection();
+
+                connection4.setRequestMethod(REQUEST_METHOD);
+                connection4.setReadTimeout(READ_TIMEOUT);
+                connection4.setConnectTimeout(CONNECTION_TIMEOUT);
+
+                connection4.connect();
+
+                // store json string from GET response
+
+                InputStreamReader streamReader = new InputStreamReader(connection4.getInputStream());
+                BufferedReader reader = new BufferedReader(streamReader);
+                StringBuilder stringBuilder = new StringBuilder();
+
+                while ((inputLine4 = reader.readLine()) != null) {
+                    stringBuilder.append(inputLine4);
+                }
+
+                reader.close();
+                streamReader.close();
+
+                result4 = stringBuilder.toString();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                result4 = null;
+
+                Thread.currentThread().interrupt();
+            }
+
+            // parse the json string into 'close' and 'volume' array
+
+            JSONObject jsonObject4 = null;
+            JSONArray jsonArrayClose4 = null;
+            JSONArray jsonArrayOpen4 = null;
+
+            try {
+                jsonObject4 = new JSONObject(result4);
+                jsonArrayClose4 = jsonObject4.getJSONArray("c");
+                jsonArrayOpen4 = jsonObject4.getJSONArray("o");
+
+//                jsonArrayVolume = jsonObject.getJSONArray("v");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+//            Log.v("close", String.valueOf(jsonArrayClose4.length()));
+//            Log.v("vol", String.valueOf(jsonArrayVolume.length()));
+            try {
+                try {
+                    for (int i = 0; i < jsonArrayClose4.length(); i++) {
+                        double close = jsonArrayClose4.getDouble(i);
+                        double open = jsonArrayOpen4.getDouble(i);
+
+//                    double volume = jsonArrayVolume.getDouble(i);
+                        Log.v("data", i + ":, c: " + close);
+
+                        ContentValues values = new ContentValues();
+                        values.put(HistoricalDataProvider.TICKER_NAME, "4");
+                        values.put(HistoricalDataProvider.CLOSE, close);
+                        values.put(HistoricalDataProvider.OPEN, open);
+
+//                    values.put(HistoricalDataProvider.VOLUME, volume);
+                        getContentResolver().insert(HistoricalDataProvider.CONTENT_URI, values);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                // broadcast message that download is complete
+
+                Intent intent0 = new Intent("DOWNLOAD_COMPLETE");
+                sendBroadcast(intent0);
+                Log.v("Down2status", "download 2 end");
+
+                stopSelf(msg.arg1);
+
+            }catch (NullPointerException e){
+                for (int i = 0; i < 6; i++) {
+                    double close = 0;
+                    double open = 0;
+//                    double volume = jsonArrayVolume.getDouble(i);
+                    Log.v("data", i + ":, c: " + close );
+
+                    ContentValues values = new ContentValues();
+                    values.put(HistoricalDataProvider.TICKER_NAME, "4");
+                    values.put(HistoricalDataProvider.CLOSE, close);
+                    values.put(HistoricalDataProvider.OPEN, open);
+
+//                    values.put(HistoricalDataProvider.VOLUME, volume);
+                    getContentResolver().insert(HistoricalDataProvider.CONTENT_URI, values);
+
+                }
+                Intent intent4 = new Intent("DOWNLOAD_COMPLETE");
+                sendBroadcast(intent4);
+
+                stopSelf(msg.arg1);
+            }
         }
     }
 
