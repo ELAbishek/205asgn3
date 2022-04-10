@@ -227,31 +227,16 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="380dp"
-        android:layout_height="51dp"
-        android:layout_marginTop="4dp"
+        android:layout_width="239dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="72dp"
         android:background="@color/white"
         android:fontFamily="sans-serif"
-        android:text="Assignment 3"
+        android:text="      AR          AV"
         android:textSize="35sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.516"
+        app:layout_constraintHorizontal_bias="0.806"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="33dp"
-        android:layout_height="27dp"
-        android:text="AR"
-        tools:layout_editor_absoluteX="199dp"
-        tools:layout_editor_absoluteY="104dp" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="43dp"
-        android:layout_height="38dp"
-        android:text="AV"
-        tools:layout_editor_absoluteX="331dp"
-        tools:layout_editor_absoluteY="104dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
