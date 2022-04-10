@@ -242,6 +242,12 @@
         android:rotationX="0"
         android:rotationY="0"
         android:text="CS205 Assignment 3 G1T13"
+        android:layout_width="239dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="72dp"
+        android:background="@color/white"
+        android:fontFamily="sans-serif"
+        android:text="      AR          AV"
         android:textSize="35sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -282,4 +288,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView2"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintHorizontal_bias="0.806"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
