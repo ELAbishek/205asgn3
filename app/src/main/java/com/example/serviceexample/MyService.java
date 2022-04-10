@@ -465,7 +465,6 @@ public class MyService extends Service{
                 }
                 Intent intent3 = new Intent("DOWNLOAD_COMPLETE");
                 sendBroadcast(intent3);
-                Log.v("Down2status", "null download 2");
 
                 stopSelf(msg.arg1);
             }
