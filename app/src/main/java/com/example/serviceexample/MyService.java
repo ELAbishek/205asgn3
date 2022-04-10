@@ -104,21 +104,17 @@ public class MyService extends Service{
                 jsonArrayClose0 = jsonObject0.getJSONArray("c");
                 jsonArrayOpen0 = jsonObject0.getJSONArray("o");
 
-//                jsonArrayVolume = jsonObject.getJSONArray("v");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
 
-//            Log.v("close", String.valueOf(jsonArrayClose0.length()));
-//            Log.v("vol", String.valueOf(jsonArrayVolume.length()));
             try {
                 try {
                     for (int i = 0; i < jsonArrayClose0.length(); i++) {
                         double close = jsonArrayClose0.getDouble(i);
                         double open = jsonArrayOpen0.getDouble(i);
 
-//                    double volume = jsonArrayVolume.getDouble(i);
                         Log.v("data", i + ":, c: " + close);
 
                         ContentValues values = new ContentValues();
@@ -126,7 +122,6 @@ public class MyService extends Service{
                         values.put(HistoricalDataProvider.CLOSE, close);
                         values.put(HistoricalDataProvider.OPEN, open);
 
-//                    values.put(HistoricalDataProvider.VOLUME, volume);
                         getContentResolver().insert(HistoricalDataProvider.CONTENT_URI, values);
                     }
                 } catch (JSONException e) {
@@ -137,7 +132,6 @@ public class MyService extends Service{
 
                 Intent intent0 = new Intent("DOWNLOAD_COMPLETE");
                 sendBroadcast(intent0);
-                Log.v("Down2status", "download 2 end");
 
                 stopSelf(msg.arg1);
 
@@ -145,7 +139,6 @@ public class MyService extends Service{
                 for (int i = 0; i < 6; i++) {
                     double close = 0;
                     double open = 0;
-//                    double volume = jsonArrayVolume.getDouble(i);
                     Log.v("data", i + ":, c: " + close );
 
                     ContentValues values = new ContentValues();
@@ -159,7 +152,6 @@ public class MyService extends Service{
                 }
                 Intent intent0 = new Intent("DOWNLOAD_COMPLETE");
                 sendBroadcast(intent0);
-                Log.v("Down2status", "null download 2");
 
                 stopSelf(msg.arg1);
             }
@@ -171,7 +163,6 @@ public class MyService extends Service{
                     + "&resolution=M&from=1625097601&to=1640995199&token=" + token;
             String result1;
             String inputLine1;
-            Log.v("Down2status", "download 2 start");
             try {
 
                 // make GET requests
@@ -219,29 +210,24 @@ public class MyService extends Service{
                 jsonArrayClose1 = jsonObject1.getJSONArray("c");
                 jsonArrayOpen1 = jsonObject1.getJSONArray("o");
 
-//                jsonArrayVolume = jsonObject.getJSONArray("v");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
 
-//            Log.v("close", String.valueOf(jsonArrayClose1.length()));
-//            Log.v("vol", String.valueOf(jsonArrayVolume.length()));
             try {
                 try {
                     for (int i = 0; i < jsonArrayClose1.length(); i++) {
                         double close = jsonArrayClose1.getDouble(i);
                         double open = jsonArrayOpen1.getDouble(i);
 
-//                    double volume = jsonArrayVolume.getDouble(i);
-                        Log.v("data", i + ":, c: " + close);
+//                        Log.v("data", i + ":, c: " + close);
 
                         ContentValues values = new ContentValues();
                         values.put(HistoricalDataProvider.TICKER_NAME, "1");
                         values.put(HistoricalDataProvider.CLOSE, close);
                         values.put(HistoricalDataProvider.OPEN, open);
 
-//                    values.put(HistoricalDataProvider.VOLUME, volume);
                         getContentResolver().insert(HistoricalDataProvider.CONTENT_URI, values);
                     }
                 } catch (JSONException e) {
@@ -252,7 +238,6 @@ public class MyService extends Service{
 
                 Intent intent0 = new Intent("DOWNLOAD_COMPLETE");
                 sendBroadcast(intent0);
-                Log.v("Down2status", "download 2 end");
 
                 stopSelf(msg.arg1);
 
@@ -260,7 +245,6 @@ public class MyService extends Service{
                 for (int i = 0; i < 6; i++) {
                     double close = 0;
                     double open = 0;
-//                    double volume = jsonArrayVolume.getDouble(i);
                     Log.v("data", i + ":, c: " + close );
 
                     ContentValues values = new ContentValues();
@@ -268,13 +252,11 @@ public class MyService extends Service{
                     values.put(HistoricalDataProvider.CLOSE, close);
                     values.put(HistoricalDataProvider.OPEN, open);
 
-//                    values.put(HistoricalDataProvider.VOLUME, volume);
                     getContentResolver().insert(HistoricalDataProvider.CONTENT_URI, values);
 
                 }
                 Intent intent1 = new Intent("DOWNLOAD_COMPLETE");
                 sendBroadcast(intent1);
-                Log.v("Down2status", "null download 2");
 
                 stopSelf(msg.arg1);
             }
@@ -286,7 +268,6 @@ public class MyService extends Service{
                     + "&resolution=M&from=1625097601&to=1640995199&token=" + token;
             String result2;
             String inputLine2;
-            Log.v("Down2status", "download 2 start");
             try {
 
                 // make GET requests
@@ -334,21 +315,16 @@ public class MyService extends Service{
                 jsonArrayClose2 = jsonObject2.getJSONArray("c");
                 jsonArrayOpen2 = jsonObject2.getJSONArray("o");
 
-//                jsonArrayVolume = jsonObject.getJSONArray("v");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-
-//            Log.v("close", String.valueOf(jsonArrayClose2.length()));
-//            Log.v("vol", String.valueOf(jsonArrayVolume.length()));
             try {
                 try {
                     for (int i = 0; i < jsonArrayClose2.length(); i++) {
                         double close = jsonArrayClose2.getDouble(i);
                         double open = jsonArrayOpen2.getDouble(i);
 
-//                    double volume = jsonArrayVolume.getDouble(i);
                         Log.v("data", i + ":, c: " + close);
 
                         ContentValues values = new ContentValues();
@@ -356,7 +332,6 @@ public class MyService extends Service{
                         values.put(HistoricalDataProvider.CLOSE, close);
                         values.put(HistoricalDataProvider.OPEN, open);
 
-//                    values.put(HistoricalDataProvider.VOLUME, volume);
                         getContentResolver().insert(HistoricalDataProvider.CONTENT_URI, values);
                     }
                 } catch (JSONException e) {
@@ -367,7 +342,6 @@ public class MyService extends Service{
 
                 Intent intent0 = new Intent("DOWNLOAD_COMPLETE");
                 sendBroadcast(intent0);
-                Log.v("Down2status", "download 2 end");
 
                 stopSelf(msg.arg2);
 
@@ -375,7 +349,6 @@ public class MyService extends Service{
                 for (int i = 0; i < 6; i++) {
                     double close = 0;
                     double open = 0;
-//                    double volume = jsonArrayVolume.getDouble(i);
                     Log.v("data", i + ":, c: " + close );
 
                     ContentValues values = new ContentValues();
@@ -383,13 +356,11 @@ public class MyService extends Service{
                     values.put(HistoricalDataProvider.CLOSE, close);
                     values.put(HistoricalDataProvider.OPEN, open);
 
-//                    values.put(HistoricalDataProvider.VOLUME, volume);
                     getContentResolver().insert(HistoricalDataProvider.CONTENT_URI, values);
 
                 }
                 Intent intent2 = new Intent("DOWNLOAD_COMPLETE");
                 sendBroadcast(intent2);
-                Log.v("Down2status", "null download 2");
 
                 stopSelf(msg.arg1);
             }
@@ -401,7 +372,6 @@ public class MyService extends Service{
                     + "&resolution=M&from=1625097601&to=1640995199&token=" + token;
             String result3;
             String inputLine3;
-            Log.v("Down2status", "download 2 start");
             try {
 
                 // make GET requests
@@ -449,28 +419,23 @@ public class MyService extends Service{
                 jsonArrayClose3 = jsonObject3.getJSONArray("c");
                 jsonArrayOpen3 = jsonObject3.getJSONArray("o");
 
-//                jsonArrayVolume = jsonObject.getJSONArray("v");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
 
-//            Log.v("close", String.valueOf(jsonArrayClose3.length()));
-//            Log.v("vol", String.valueOf(jsonArrayVolume.length()));
             try {
                 try {
                     for (int i = 0; i < jsonArrayClose3.length(); i++) {
                         double close = jsonArrayClose3.getDouble(i);
                         double open = jsonArrayOpen3.getDouble(i);
 
-//                    double volume = jsonArrayVolume.getDouble(i);
                         Log.v("data", i + ":, c: " + close);
 
                         ContentValues values = new ContentValues();
                         values.put(HistoricalDataProvider.TICKER_NAME, "3");
                         values.put(HistoricalDataProvider.CLOSE, close);
                         values.put(HistoricalDataProvider.OPEN, open);
-//                    values.put(HistoricalDataProvider.VOLUME, volume);
                         getContentResolver().insert(HistoricalDataProvider.CONTENT_URI, values);
                     }
                 } catch (JSONException e) {
@@ -481,7 +446,6 @@ public class MyService extends Service{
 
                 Intent intent0 = new Intent("DOWNLOAD_COMPLETE");
                 sendBroadcast(intent0);
-                Log.v("Down2status", "download 2 end");
 
                 stopSelf(msg.arg1);
 
@@ -490,14 +454,12 @@ public class MyService extends Service{
                     double close = 0;
                     double open = 0;
 
-//                    double volume = jsonArrayVolume.getDouble(i);
                     Log.v("data", i + ":, c: " + close );
 
                     ContentValues values = new ContentValues();
                     values.put(HistoricalDataProvider.TICKER_NAME, "3");
                     values.put(HistoricalDataProvider.CLOSE, close);
                     values.put(HistoricalDataProvider.OPEN, open);
-//                    values.put(HistoricalDataProvider.VOLUME, volume);
                     getContentResolver().insert(HistoricalDataProvider.CONTENT_URI, values);
 
                 }
@@ -515,7 +477,6 @@ public class MyService extends Service{
                     + "&resolution=M&from=1625097601&to=1640995199&token=" + token;
             String result4;
             String inputLine4;
-            Log.v("Down2status", "download 2 start");
             try {
 
                 // make GET requests
@@ -562,21 +523,17 @@ public class MyService extends Service{
                 jsonArrayClose4 = jsonObject4.getJSONArray("c");
                 jsonArrayOpen4 = jsonObject4.getJSONArray("o");
 
-//                jsonArrayVolume = jsonObject.getJSONArray("v");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
 
-//            Log.v("close", String.valueOf(jsonArrayClose4.length()));
-//            Log.v("vol", String.valueOf(jsonArrayVolume.length()));
             try {
                 try {
                     for (int i = 0; i < jsonArrayClose4.length(); i++) {
                         double close = jsonArrayClose4.getDouble(i);
                         double open = jsonArrayOpen4.getDouble(i);
 
-//                    double volume = jsonArrayVolume.getDouble(i);
                         Log.v("data", i + ":, c: " + close);
 
                         ContentValues values = new ContentValues();
@@ -584,7 +541,6 @@ public class MyService extends Service{
                         values.put(HistoricalDataProvider.CLOSE, close);
                         values.put(HistoricalDataProvider.OPEN, open);
 
-//                    values.put(HistoricalDataProvider.VOLUME, volume);
                         getContentResolver().insert(HistoricalDataProvider.CONTENT_URI, values);
                     }
                 } catch (JSONException e) {
@@ -595,7 +551,6 @@ public class MyService extends Service{
 
                 Intent intent0 = new Intent("DOWNLOAD_COMPLETE");
                 sendBroadcast(intent0);
-                Log.v("Down2status", "download 2 end");
 
                 stopSelf(msg.arg1);
 
@@ -603,7 +558,6 @@ public class MyService extends Service{
                 for (int i = 0; i < 6; i++) {
                     double close = 0;
                     double open = 0;
-//                    double volume = jsonArrayVolume.getDouble(i);
                     Log.v("data", i + ":, c: " + close );
 
                     ContentValues values = new ContentValues();
@@ -611,7 +565,6 @@ public class MyService extends Service{
                     values.put(HistoricalDataProvider.CLOSE, close);
                     values.put(HistoricalDataProvider.OPEN, open);
 
-//                    values.put(HistoricalDataProvider.VOLUME, volume);
                     getContentResolver().insert(HistoricalDataProvider.CONTENT_URI, values);
 
                 }

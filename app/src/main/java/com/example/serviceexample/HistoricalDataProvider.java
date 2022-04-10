@@ -49,7 +49,7 @@ public class HistoricalDataProvider extends ContentProvider {
     static final String TABLE_NAME = "history";
     static final int DATABASE_VERSION = 1;
 
-    static final String CREATE_DB_TABLE =
+    static final String CREATE_DB_TABLE = //SQL table creation query to store id, tickername, open, close values
             " CREATE TABLE " + TABLE_NAME +
                     " (id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     " ticker_name char(1) NOT NULL, " +
@@ -66,7 +66,7 @@ public class HistoricalDataProvider extends ContentProvider {
 
         @Override
 
-        public void onCreate(SQLiteDatabase db) {
+        public void onCreate(SQLiteDatabase db) { //To drop table and create empty one on opening the app
             db.execSQL("drop table if exists " + TABLE_NAME);
             db.execSQL(CREATE_DB_TABLE);
         }
@@ -89,7 +89,7 @@ public class HistoricalDataProvider extends ContentProvider {
 
     }
 
-    public static void del(){
+    public static void del(){ //To perform deletion and creation whenever the download button is pressed
         db.execSQL("drop table if exists " + TABLE_NAME);
         db.execSQL(CREATE_DB_TABLE);
     }

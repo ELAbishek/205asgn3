@@ -15,7 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity{
 
-    private Button start, calc;
+    private Button start, calc; //To read the buttons and set up variables
     private TextView result0;
     private TextView result1;
     private TextView result2;
@@ -31,12 +31,12 @@ public class MainActivity extends AppCompatActivity{
     private TextView sdresult2;
     private TextView sdresult3;
     private TextView sdresult4;
-//    Uri CONTENT_URI = Uri.parse("content://com.example.serviceexample.HistoricalDataProvider/history");
+
     private BroadcastReceiver myBroadcastReceiver;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        myBroadcastReceiver = new MyBroadcastReceiver(new Handler(Looper.getMainLooper()));
+        myBroadcastReceiver = new MyBroadcastReceiver(new Handler(Looper.getMainLooper())); // Broadcast receiver instance
 
 
         // set up layout
@@ -101,7 +101,6 @@ public class MainActivity extends AppCompatActivity{
                 sdresult2.setText("Waiting..");
                 sdresult3.setText("Waiting..");
                 sdresult4.setText("Waiting..");
-//                myBroadcastReceiver = new MyBroadcastReceiver(new Handler(Looper.getMainLooper()));
                 registerReceiver(myBroadcastReceiver, new IntentFilter("DOWNLOAD_COMPLETE"));
             }
         });

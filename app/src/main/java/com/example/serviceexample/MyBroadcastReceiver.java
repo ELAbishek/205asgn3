@@ -24,12 +24,12 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (intent.getAction().equals("DOWNLOAD_COMPLETE")) {
+        if (intent.getAction().equals("DOWNLOAD_COMPLETE")) { //Wait until DOWNLOAD_COMPLETE is received by this
 
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    int tempcount = count++;
+                    int tempcount = count++; //Temporary variable responsible for handling the indexing and cursor position
                     Uri CONTENT_URI = Uri.parse("content://com.example.serviceexample.HistoricalDataProvider/history");
                     TextView result0 = (TextView) ((Activity)context).findViewById(R.id.textview_result0);
                     TextView result1 = (TextView) ((Activity)context).findViewById(R.id.textview_result1);
@@ -50,15 +50,13 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
                             double close = cursor.getDouble(cursor.getColumnIndexOrThrow("close"));
                             double open = cursor.getDouble(cursor.getColumnIndexOrThrow("open"));
 
-                            Log.v("Tempcount", tempcount + "");
-                            for (int k = 0; k < 6 * tempcount;k++){
+                            for (int k = 0; k < 6 * tempcount;k++){ //To move cursor to start of data for next ticker
                                 cursor.moveToNext();
                             }
                             for (int j = 0; j < 6; j++) {
 
                                 int res;
                                 int id = cursor.getColumnIndex("id");
-                                Log.v("check for j", j + "");
                                 close = cursor.getDouble(cursor.getColumnIndexOrThrow("close"));
                                 open = cursor.getDouble(cursor.getColumnIndexOrThrow("open"));
                                 diff_price += (close-open)/open;
@@ -69,6 +67,9 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
                         } else {
                             result0.setText("No Records Found");
                             result1.setText("No Records Found");
+                            result2.setText("No Records Found");
+                            result3.setText("No Records Found");
+                            result4.setText("No Records Found");
                         }
 
                         double avg_diff_price = diff_price/6;
@@ -83,9 +84,8 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
 
                         double annualized_return = ((diff_price/6) * 12) * 100;
 
-                        Log.v("result",tempcount + "");
                         if (annualized_return == 0.00){
-                            resArr[tempcount].setText("NA");
+                            resArr[tempcount].setText("NA"); //To set the results to NA in case the annualized return or volatility returns 0
                             sdArr[tempcount].setText("NA");
                         }
                         else{
